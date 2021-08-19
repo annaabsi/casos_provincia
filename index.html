@@ -238,7 +238,7 @@ top: 5px;
 
       map.on("load", async function() {
         //var result = [];
-        var files = ["geojson.json", "dataset_covid_total.json"];
+        var files = ["geojson.json", "https://raw.githubusercontent.com/GenyLeong/casos_provincia/main/dataset_covid_total.json"];
 
         const data = await d3.json(files[0]);
         const data_covid = await d3.json(files[1]);
