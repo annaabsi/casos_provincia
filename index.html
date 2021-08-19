@@ -51,7 +51,7 @@
     #map{
   width:100%;
   max-width:700px;
-  margin:auto;
+  margin:21px auto;
   min-height:500px
 }
 
@@ -61,6 +61,11 @@
     text-align: center;
 }
 
+#slider{
+position: relative;
+
+top: 5px;
+}
 
 .mapboxgl-popup-content .provincia{
       margin: 7px 7px 0px 7px;
@@ -68,6 +73,12 @@
 
 .mapboxgl-popup-content .totales{
       margin: 1px 7px 0px 7px;
+}
+
+.total_region{
+  font-size: 10px;
+  font-weight: 700;
+  margin: 0 7px;
 }
     </style>
   </head>
@@ -134,7 +145,7 @@
             .mapValues("TOTAL")
             .value();
 
-          console.log(casos)
+          //console.log(casos)
 
           document.getElementById("week_a_week").textContent =
             "Semana del " +
@@ -148,20 +159,40 @@
               "fill-color",
               getColor(provincia[layerID])
             );
+            
+            function _isContains(json, value) {
+	let contains = false;
+  Object.keys(json).some(key => {
+		contains = typeof json[key] === 'object' ? _isContains(json[key], value) : json[key] === value;
+	  return contains;
+	});
+  return contains;
+ }
 
             map.on("click", layerID, function(e) {
               //console.log(casos[22].users)
               total_provincia = casos[week].users;
+              console.log(total_provincia)
 
               for (prov in total_provincia) {
                 getProv = e.features[0].properties.NOMBPROV;
                 getDep = e.features[0].properties.FIRST_NOMB;
 
                 getProvName = total_provincia[prov]["PROVINCIA"];
-                if (getProv == getProvName) {
+
+                checkValue = _isContains(total_provincia, getProv)
+                console.log(checkValue)
+                if (getProv == getProvName && checkValue == true) {
                   casos_provincia = total_provincia[prov]["TOTAL"];
                   casos_mujeres = total_provincia[prov]["FEMENINO"];
                   casos_hombres = total_provincia[prov]["MASCULINO"];
+                  casos_region = total_provincia[prov]['INDICE'];
+                }
+                else if(checkValue == false){
+                  casos_region = total_provincia[prov]['INDICE'];
+                  casos_provincia = '0'
+                  casos_mujeres = '0'
+                  casos_hombres = '0'
                 }
               }
 
@@ -180,11 +211,13 @@
                     getProv +
                     "</p><p class='totales'>" +
                     casos_provincia +
-                    " casos cada 10.000 hab.</p><p class='totales'>" +
+                    " casos cada 100.000 hab.</p><p class='totales'>" +
                     casos_mujeres +
-                    " mujeres cada 10.000 hab.</p><p class='totales'>" +
+                    " mujeres cada 100.000 hab.</p><p class='totales'>" +
                     casos_hombres +
-                    " hombres cada 10.000 hab.</p>"
+                    " hombres cada 100.000 hab.</p><p class='total_region'>Acumulado de la región/100.000 hab: " +
+                      casos_region + "</p>"
+
                 )
                 .addTo(map);
             });
@@ -230,7 +263,7 @@
             })
             .value();
 
-          //console.log(casos);
+          console.log(casos);
 
           provincia = _.chain(casos[8].users)
             .keyBy("PROVINCIA")
