@@ -48,44 +48,54 @@
     <link rel="stylesheet" href="/style.css" />
 
     <style>
-    #map{
-  width:100%;
-  max-width:700px;
-  margin:21px auto;
-  min-height:500px
-}
+      #map {
+        width: 100%;
+        max-width: 700px;
+        margin: 21px auto;
+        min-height: 500px;
+      }
 
-.mapboxgl-popup-content{
-      min-width: 120px;
-    padding: 7px 0px 4px 0px;
-    text-align: center;
-}
+      .mapboxgl-popup-content {
+        min-width: 120px;
+        padding: 7px 0px 4px 0px;
+        text-align: center;
+      }
 
-#slider{
-position: relative;
+      #slider {
+        position: relative;
 
-top: 5px;
-}
+        top: 5px;
+      }
 
-.mapboxgl-popup-content .provincia{
-      margin: 7px 7px 0px 7px;
-}
+      .mapboxgl-popup-content .provincia {
+        margin: 7px 7px 0px 7px;
+      }
 
-.mapboxgl-popup-content .totales{
-      margin: 1px 7px 0px 7px;
-}
+      .mapboxgl-popup-content .totales {
+        margin: 1px 7px 0px 7px;
+      }
 
-.total_region{
-  font-size: 10px;
-  font-weight: 700;
-  margin: 0 7px;
-}
+      .total_region {
+        font-size: 10px;
+        font-weight: 700;
+        margin: 0 7px;
+      }
+
+      .note {
+        margin: auto;
+        max-width: 700px;
+        text-align: left;
+      }
     </style>
   </head>
   <body>
     <label id="week_a_week"></label>
     <input id="slider" type="range" min="1" max="8" step="1" value="8" />
     <div id="map"></div>
+    <p class="note">
+      Nota: El mapa no toma en cuenta 855 valores sin datos de la variable
+      provincia para las semanas correspondientes.
+    </p>
     <script>
       mapboxgl.accessToken =
         "pk.eyJ1IjoiZ2VueWxlb25nIiwiYSI6ImNqeTdrMWQweDAwYWUzZXM2ZHUxN3lxcWMifQ.taFCKYjv4VSHhWN86P8N1Q";
@@ -95,7 +105,7 @@ top: 5px;
         center: [-75.178, -9.184],
         minZoom: 3,
         zoom: 3.8,
-        style: "mapbox://styles/mapbox/light-v10"
+        style: "mapbox://styles/mapbox/light-v10",
       });
 
       function getColor(n) {
@@ -159,20 +169,23 @@ top: 5px;
               "fill-color",
               getColor(provincia[layerID])
             );
-            
-            function _isContains(json, value) {
-	let contains = false;
-  Object.keys(json).some(key => {
-		contains = typeof json[key] === 'object' ? _isContains(json[key], value) : json[key] === value;
-	  return contains;
-	});
-  return contains;
- }
 
-            map.on("click", layerID, function(e) {
+            function _isContains(json, value) {
+              let contains = false;
+              Object.keys(json).some((key) => {
+                contains =
+                  typeof json[key] === "object"
+                    ? _isContains(json[key], value)
+                    : json[key] === value;
+                return contains;
+              });
+              return contains;
+            }
+
+            map.on("click", layerID, function (e) {
               //console.log(casos[22].users)
               total_provincia = casos[week].users;
-              console.log(total_provincia)
+              console.log(total_provincia);
 
               for (prov in total_provincia) {
                 getProv = e.features[0].properties.NOMBPROV;
@@ -180,19 +193,18 @@ top: 5px;
 
                 getProvName = total_provincia[prov]["PROVINCIA"];
 
-                checkValue = _isContains(total_provincia, getProv)
-                console.log(checkValue)
+                checkValue = _isContains(total_provincia, getProv);
+                console.log(checkValue);
                 if (getProv == getProvName && checkValue == true) {
                   casos_provincia = total_provincia[prov]["TOTAL"];
                   casos_mujeres = total_provincia[prov]["FEMENINO"];
                   casos_hombres = total_provincia[prov]["MASCULINO"];
-                  casos_region = total_provincia[prov]['INDICE'];
-                }
-                else if(checkValue == false){
-                  casos_region = total_provincia[prov]['INDICE'];
-                  casos_provincia = '0'
-                  casos_mujeres = '0'
-                  casos_hombres = '0'
+                  casos_region = total_provincia[prov]["INDICE"];
+                } else if (checkValue == false) {
+                  casos_region = total_provincia[prov]["INDICE"];
+                  casos_provincia = "0";
+                  casos_mujeres = "0";
+                  casos_hombres = "0";
                 }
               }
 
@@ -216,19 +228,19 @@ top: 5px;
                     " mujeres cada 100.000 hab.</p><p class='totales'>" +
                     casos_hombres +
                     " hombres cada 100.000 hab.</p><p class='total_region'>Acumulado de la región/100.000 hab: " +
-                      casos_region + "</p>"
-
+                    casos_region +
+                    "</p>"
                 )
                 .addTo(map);
             });
           }
 
-          map.on("mouseenter", layerID, function() {
+          map.on("mouseenter", layerID, function () {
             map.getCanvas().style.cursor = "pointer";
           });
 
           // Change it back to a pointer when it leaves.
-          map.on("mouseleave", layerID, function() {
+          map.on("mouseleave", layerID, function () {
             map.getCanvas().style.cursor = "";
           });
 
@@ -236,9 +248,12 @@ top: 5px;
         });
       }
 
-      map.on("load", async function() {
+      map.on("load", async function () {
         //var result = [];
-        var files = ["geojson.json", "https://raw.githubusercontent.com/GenyLeong/casos_provincia/main/dataset_covid_total.json"];
+        var files = [
+          "geojson.json",
+          "https://raw.githubusercontent.com/GenyLeong/casos_provincia/main/dataset_covid_total.json",
+        ];
 
         const data = await d3.json(files[0]);
         const data_covid = await d3.json(files[1]);
@@ -248,17 +263,17 @@ top: 5px;
 
         map.addSource("data", {
           type: "geojson",
-          data: data
+          data: data,
         });
 
-        data.features.forEach(function(d, b) {
+        data.features.forEach(function (d, b) {
           var layerID = d.properties.NOMBPROV;
 
           //console.log(covid_filter)
           casos = _.chain(covid_filter)
             .groupBy("FECHA_RESULTADO")
             .toPairs()
-            .map(function(currentData) {
+            .map(function (currentData) {
               return _.zipObject(["FECHA_RESULTADO", "users"], currentData);
             })
             .value();
@@ -278,8 +293,8 @@ top: 5px;
               layout: {},
               paint: {
                 "fill-color": getColor(provincia[layerID]),
-                "fill-opacity": 0.6
-              }
+                "fill-opacity": 0.6,
+              },
             });
           }
         });
@@ -288,7 +303,7 @@ top: 5px;
 
         document
           .getElementById("slider")
-          .addEventListener("input", function(e) {
+          .addEventListener("input", function (e) {
             var week = parseInt(e.target.value, 9);
             console.log(week);
             filterBy(data, covid_filter, week);
