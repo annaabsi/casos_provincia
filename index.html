@@ -96,6 +96,7 @@
       Nota: El mapa no toma en cuenta 855 valores sin datos de la variable
       provincia para las semanas correspondientes.
     </p>
+    <div id="conclusion" class="note"></div>
     <script>
       mapboxgl.accessToken =
         "pk.eyJ1IjoiZ2VueWxlb25nIiwiYSI6ImNqeTdrMWQweDAwYWUzZXM2ZHUxN3lxcWMifQ.taFCKYjv4VSHhWN86P8N1Q";
@@ -182,6 +183,29 @@
               return contains;
             }
 
+            const todas_provincias = casos[week].users;
+            const array_cero = [];
+            const array_max = [];
+            for (provincia in todas_provincias) {
+              casos_provincia = todas_provincias[provincia]["TOTAL"];
+              nombre_provincia = todas_provincias[provincia]["PROVINCIA"];
+
+              if (casos_provincia == 0) {
+                array_cero.push(nombre_provincia);
+              }
+              if (casos_provincia > 100) {
+                array_max.push(nombre_provincia);
+              }
+            }
+
+            console.log(array_cero, array_max);
+            document.getElementById("conclusion").innerHTML =
+              "<p>Provincias con ningun caso de COVID-19 durante la semana seleccionada: " +
+              array_cero.join(", ") +
+              "</p><p>Provincias con más de 100 casos de COVID-19 cada 100.000 habitantes durante la semana seleccionada: " +
+              array_max.join(", ") +
+              "</p>";
+
             map.on("click", layerID, function (e) {
               //console.log(casos[22].users)
               total_provincia = casos[week].users;
@@ -195,6 +219,7 @@
 
                 checkValue = _isContains(total_provincia, getProv);
                 console.log(checkValue);
+
                 if (getProv == getProvName && checkValue == true) {
                   casos_provincia = total_provincia[prov]["TOTAL"];
                   casos_mujeres = total_provincia[prov]["FEMENINO"];

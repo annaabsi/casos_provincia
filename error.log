@@ -1,5 +1,7 @@
-[I 16:36:58.522 NotebookApp] The port 8888 is already in use, trying another port.
-[I 16:36:58.523 NotebookApp] Serving notebooks from local directory: /home/geny/Documents/covid-19/casos_provincia
-[I 16:36:58.523 NotebookApp] Jupyter Notebook 6.4.0 is running at:
-[I 16:36:58.523 NotebookApp] http://localhost:8889/
-[I 16:36:58.523 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[I 18:14:20.206 NotebookApp] Serving notebooks from local directory: /home/geny/Documents/covid-19/casos_provincia
+[I 18:14:20.206 NotebookApp] Jupyter Notebook 6.4.0 is running at:
+[I 18:14:20.207 NotebookApp] http://localhost:8888/
+[I 18:14:20.207 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 18:14:30.505 NotebookApp] received signal 15, stopping
+[I 18:14:30.507 NotebookApp] Shutting down 0 kernels
+[I 18:14:30.507 NotebookApp] Shutting down 0 terminals
