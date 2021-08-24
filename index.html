@@ -198,7 +198,7 @@
               }
             }
 
-            console.log(array_cero, array_max);
+            //console.log(array_cero, array_max);
             document.getElementById("conclusion").innerHTML =
               "<p>Provincias con ningun caso de COVID-19 durante la semana seleccionada: " +
               array_cero.join(", ") +
@@ -284,12 +284,16 @@
         const data_covid = await d3.json(files[1]);
         const covid_filter = data_covid["data"];
 
+        console.log(data, data_covid)
+
         map["dragPan"].disable();
 
         map.addSource("data", {
           type: "geojson",
           data: data,
         });
+
+        
 
         data.features.forEach(function (d, b) {
           var layerID = d.properties.NOMBPROV;
@@ -303,7 +307,7 @@
             })
             .value();
 
-          console.log(casos);
+          //console.log(casos);
 
           provincia = _.chain(casos[8].users)
             .keyBy("PROVINCIA")
