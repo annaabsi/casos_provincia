@@ -90,7 +90,7 @@
   </head>
   <body>
     <label id="week_a_week"></label>
-    <input id="slider" type="range" min="1" max="8" step="1" value="8" />
+    <input id="slider" type="range" min="0" max="8" step="1" value="8" />
     <div id="map"></div>
     <p class="note">
       Nota: En la base de datos analizada no se han tomado en cuenta 2220 casos
@@ -157,14 +157,14 @@
             .mapValues("TOTAL")
             .value();
 
-          console.log(casos)
+          
           
           
           value_input = document.getElementById("slider").value;
-            
-          if(value_input==1){
+          console.log(casos, value_input)
+          if(value_input==0){
               document.getElementById("week_a_week").textContent =
-              "Semana del 28-04-2021"
+              "Semana del 28-06-2021"
               +
               " hasta el " +
               casos[week]["FECHA_RESULTADO"];
@@ -337,9 +337,9 @@
             })
             .value();
 
-          //console.log(casos);
+          console.log(casos);
 
-          provincia = _.chain(casos[8].users)
+          provincia = _.chain(casos[7].users)
             .keyBy("PROVINCIA")
             .mapValues("TOTAL")
             .value();
@@ -358,12 +358,12 @@
           }
         });
 
-        filterBy(data, covid_filter, 8);
+        filterBy(data, covid_filter, 7);
 
         document
           .getElementById("slider")
           .addEventListener("input", function (e) {
-            var week = parseInt(e.target.value, 9);
+            var week = parseInt(e.target.value, 7);
             console.log(week);
             filterBy(data, covid_filter, week);
           });
