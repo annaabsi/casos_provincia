@@ -157,13 +157,45 @@
             .mapValues("TOTAL")
             .value();
 
-          //console.log(casos)
+          console.log(casos)
+          
+          
+          value_input = document.getElementById("slider").value;
+            
+          if(value_input==1){
+              document.getElementById("week_a_week").textContent =
+              "Semana del " +
+              casos[week - 1]["FECHA_RESULTADO"]
+              +
+              " hasta el " +
+              casos[week]["FECHA_RESULTADO"];
+          }
+            
+          
+          else{
+            const date_next = casos[week - 1]["FECHA_RESULTADO"];
+            //date_next.setDate(date_next.getDate() + 1); 
 
-          document.getElementById("week_a_week").textContent =
+            array_date = date_next.split("-")
+            console.log(date_next.split("-"))
+            
+            if(array_date[2]<9){
+              const day_convert = array_date[2].split('');
+              day_final = day_convert[0] + (parseInt(day_convert[1])+1)
+            }
+            else if (array_date[2]>=9){
+              day_final = (parseInt(array_date[2])+1)
+            }
+
+            dateFormat = array_date[0] + "-" + array_date[1] + "-" + day_final
+
+            document.getElementById("week_a_week").textContent =
             "Semana del " +
-            casos[week - 1]["FECHA_RESULTADO"] +
-            " al " +
+            dateFormat
+             +
+            " hasta el " +
             casos[week]["FECHA_RESULTADO"];
+          }          
 
           if (provincia[layerID] !== "") {
             map.setPaintProperty(
