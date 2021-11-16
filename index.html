@@ -34,7 +34,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
     <!-- Import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
+    <!-- <link rel="stylesheet" href="/style.css" /> -->
 
     <style>
         #map {
@@ -155,17 +155,36 @@
                     const date_next = casos[week - 1]["FECHA_RESULTADO"];
                     //date_next.setDate(date_next.getDate() + 1);
 
-                    array_date = date_next.split("-");
-                    console.log(date_next.split("-"));
+                    const array_date = date_next.split("-");
+                    console.log(date_next, array_date[2].split(""));
+                    // const day_convert = "",
+                    //     month_convert = "";
 
                     if (array_date[2] < 9) {
-                        const day_convert = array_date[2].split("");
+                        day_convert = array_date[2].split("");
                         day_final = day_convert[0] + (parseInt(day_convert[1]) + 1);
-                    } else if (array_date[2] >= 9) {
+                        dateFormat =
+                            array_date[0] + "-" + array_date[1] + "-" + day_final;
+                    } else if (array_date[2] >= 9 && array_date[2] < 31) {
                         day_final = parseInt(array_date[2]) + 1;
-                    }
+                        dateFormat =
+                            array_date[0] + "-" + array_date[1] + "-" + day_final;
+                    } else if (
+                        array_date[2] == 31 &&
+                        (array_date[1] == "01" ||
+                            array_date[1] == "03" ||
+                            array_date[1] == "05" ||
+                            array_date[1] == "07" ||
+                            array_date[1] == "08" ||
+                            array_date[1] == "10" ||
+                            array_date[1] == "12")
+                    ) {
+                        const month_convert = array_date[1].split("");
 
-                    dateFormat = array_date[0] + "-" + array_date[1] + "-" + day_final;
+                        month_final = month_convert[0] + parseInt(month_convert[1] + 1);
+                        console.log(month_convert, month_final);
+                        dateFormat = array_date[0] + "-" + month_final + "-" + "01";
+                    }
 
                     document.getElementById("week_a_week").textContent =
                         "Semana del " +
