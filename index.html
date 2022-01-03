@@ -152,6 +152,7 @@
                         " hasta el " +
                         casos[week]["FECHA_RESULTADO"];
                 } else {
+                    console.log(casos[week]["FECHA_RESULTADO"]);
                     const date_next = casos[week - 1]["FECHA_RESULTADO"];
                     //date_next.setDate(date_next.getDate() + 1);
 
@@ -247,14 +248,16 @@
                             getProvName = total_provincia[prov]["PROVINCIA"];
 
                             checkValue = _isContains(total_provincia, getProv);
-                            console.log(checkValue);
+                            console.log(checkValue, getProv, getDep, getProvName);
 
                             if (getProv == getProvName && checkValue == true) {
                                 casos_provincia = total_provincia[prov]["TOTAL"];
                                 casos_mujeres = total_provincia[prov]["FEMENINO"];
                                 casos_hombres = total_provincia[prov]["MASCULINO"];
                                 casos_region = total_provincia[prov]["INDICE"];
-                            } else if (checkValue == false) {
+                            }
+
+                            if (getProv != getProvName && checkValue == false) {
                                 casos_region = total_provincia[prov]["INDICE"];
                                 casos_provincia = "n/a";
                                 casos_mujeres = "n/a";
