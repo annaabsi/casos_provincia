@@ -78,7 +78,7 @@
         {
             "index": 5,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -138,7 +138,7 @@
         {
             "index": 10,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -3570,7 +3570,7 @@
         {
             "index": 296,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -3618,7 +3618,7 @@
         {
             "index": 300,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -4422,7 +4422,7 @@
         {
             "index": 367,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -4506,7 +4506,7 @@
         {
             "index": 374,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -6222,7 +6222,7 @@
         {
             "index": 517,
             "DEPARTAMENTO": "HUANUCO",
-            "PROVINCIA": "MARA\u00d1ON",
+            "PROVINCIA": "MARAÑON",
             "POBLACION": 29160.0,
             "POBLACION_CIENMIL": 0.2916,
             "INDICE": 4872,
@@ -6870,7 +6870,7 @@
         {
             "index": 571,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -7182,7 +7182,7 @@
         {
             "index": 597,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -7974,7 +7974,7 @@
         {
             "index": 663,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -8814,7 +8814,7 @@
         {
             "index": 733,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -10938,7 +10938,7 @@
         {
             "index": 910,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -11562,7 +11562,7 @@
         {
             "index": 962,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -12474,7 +12474,7 @@
         {
             "index": 1038,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -13014,7 +13014,7 @@
         {
             "index": 1083,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -14478,7 +14478,7 @@
         {
             "index": 1205,
             "DEPARTAMENTO": "LIMA",
-            "PROVINCIA": "CA\u00d1ETE",
+            "PROVINCIA": "CAÑETE",
             "POBLACION": 250420.0,
             "POBLACION_CIENMIL": 2.5042,
             "INDICE": 9559,
@@ -14646,7 +14646,7 @@
         {
             "index": 1219,
             "DEPARTAMENTO": "LAMBAYEQUE",
-            "PROVINCIA": "FERRE\u00d1AFE",
+            "PROVINCIA": "FERREÑAFE",
             "POBLACION": 107241.0,
             "POBLACION_CIENMIL": 1.07241,
             "INDICE": 4977,
@@ -14884,6 +14884,18 @@
             "TOTAL": 2.0
         },
         {
+            "index": 1238,
+            "DEPARTAMENTO": "LORETO",
+            "PROVINCIA": "UCAYALI",
+            "POBLACION": 62477.0,
+            "POBLACION_CIENMIL": 0.62477,
+            "INDICE": 4423,
+            "FECHA_RESULTADO": "2022-01-02",
+            "FEMENINO": "n/a",
+            "MASCULINO": "n/a",
+            "TOTAL": "n/a"
+        },
+        {
             "index": 1239,
             "DEPARTAMENTO": "PIURA",
             "PROVINCIA": "MORROPON",
@@ -14922,7 +14934,7 @@
         {
             "index": 1242,
             "DEPARTAMENTO": "LORETO",
-            "PROVINCIA": "DATEM DEL MARA\u00d1ON",
+            "PROVINCIA": "DATEM DEL MARAÑON",
             "POBLACION": 59870.0,
             "POBLACION_CIENMIL": 0.5987,
             "INDICE": 4423,
