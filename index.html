@@ -202,6 +202,7 @@
                     );
 
                     function _isContains(json, value) {
+                        //console.log(value);
                         let contains = false;
                         Object.keys(json).some((key) => {
                             contains =
@@ -238,8 +239,10 @@
 
                     map.on("click", layerID, function(e) {
                         //console.log(casos[22].users)
+                        console.log(casos[week]);
                         total_provincia = casos[week].users;
                         console.log(total_provincia);
+                        var casos_provincia, casos_mujeres, casos_hombres, casos_region;
 
                         for (prov in total_provincia) {
                             getProv = e.features[0].properties.NOMBPROV;
@@ -248,7 +251,6 @@
                             getProvName = total_provincia[prov]["PROVINCIA"];
 
                             checkValue = _isContains(total_provincia, getProv);
-                            console.log(checkValue, getProv, getDep, getProvName);
 
                             if (getProv == getProvName && checkValue == true) {
                                 casos_provincia = total_provincia[prov]["TOTAL"];
@@ -257,7 +259,8 @@
                                 casos_region = total_provincia[prov]["INDICE"];
                             }
 
-                            if (getProv != getProvName && checkValue == false) {
+                            if (checkValue == false) {
+                                console.log(total_provincia[prov]["INDICE"]);
                                 casos_region = total_provincia[prov]["INDICE"];
                                 casos_provincia = "n/a";
                                 casos_mujeres = "n/a";
