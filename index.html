@@ -245,14 +245,16 @@
                         var casos_provincia, casos_mujeres, casos_hombres, casos_region;
 
                         for (prov in total_provincia) {
+                            console.log(prov);
                             getProv = e.features[0].properties.NOMBPROV;
                             getDep = e.features[0].properties.FIRST_NOMB;
 
                             getProvName = total_provincia[prov]["PROVINCIA"];
 
                             checkValue = _isContains(total_provincia, getProv);
-
+                            console.log(getProvName, getProv, checkValue);
                             if (getProv == getProvName && checkValue == true) {
+                                console.log(getProvName, getProv);
                                 casos_provincia = total_provincia[prov]["TOTAL"];
                                 casos_mujeres = total_provincia[prov]["FEMENINO"];
                                 casos_hombres = total_provincia[prov]["MASCULINO"];
