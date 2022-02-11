@@ -93,7 +93,7 @@
     <input id="slider" type="range" min="0" max="7" step="1" value="7" />
     <div id="map"></div>
     <p class="note">
-      Nota: En la base de datos analizada no se han tomado en cuenta 2099 casos
+      Nota: En la base de datos analizada no se han tomado en cuenta 25992 casos
       de COVID-19 debido a que las provincias a las que pertenecen están en
       investigación.
     </p>
@@ -348,7 +348,7 @@
         data.features.forEach(function (d, b) {
           var layerID = d.properties.NOMBPROV;
 
-          //console.log(covid_filter)
+          //console.log(covid_filter);
           casos = _.chain(covid_filter)
             .groupBy("FECHA_RESULTADO")
             .toPairs()
