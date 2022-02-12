@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <!--
       This is the page head - it contains info the browser uses to display the page
       You won't see what's in the head in the page
@@ -20,375 +21,362 @@
 
     <!-- Meta tags for SEO and social sharing -->
     <link rel="canonical" href="https://glitch-hello-website.glitch.me/" />
-    <meta
-      name="description"
-      content="A simple website, built with Glitch. Remix it to get your own."
-    />
+    <meta name="description" content="A simple website, built with Glitch. Remix it to get your own." />
     <meta name="robots" content="index,follow" />
     <meta property="og:title" content="Hello World!" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://glitch-hello-website.glitch.me/" />
-    <meta
-      property="og:description"
-      content="A simple website, built with Glitch. Remix it to get your own."
-    />
-    <meta
-      property="og:image"
-      content="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2Fhello-website-social.png?v=1616712748147"
-    />
+    <meta property="og:description" content="A simple website, built with Glitch. Remix it to get your own." />
+    <meta property="og:image" content="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2Fhello-website-social.png?v=1616712748147" />
     <meta name="twitter:card" content="summary" />
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css"
-      rel="stylesheet"
-    />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
     <!-- Import the webpage's stylesheet -->
     <!-- <link rel="stylesheet" href="/style.css" /> -->
 
     <style>
-      #map {
-        width: 100%;
-        max-width: 700px;
-        margin: 21px auto;
-        min-height: 500px;
-      }
-
-      .mapboxgl-popup-content {
-        min-width: 120px;
-        padding: 7px 0px 4px 0px;
-        text-align: center;
-      }
-
-      #slider {
-        position: relative;
-        top: 5px;
-      }
-
-      .mapboxgl-popup-content .provincia {
-        margin: 7px 7px 0px 7px;
-      }
-
-      .mapboxgl-popup-content .totales {
-        margin: 1px 7px 0px 7px;
-      }
-
-      .total_region {
-        font-size: 10px;
-        font-weight: 700;
-        margin: 0 7px;
-      }
-
-      .note {
-        margin: auto;
-        max-width: 700px;
-        text-align: left;
-      }
+        #map {
+            width: 100%;
+            max-width: 700px;
+            margin: 21px auto;
+            min-height: 500px;
+        }
+        
+        .mapboxgl-popup-content {
+            min-width: 120px;
+            padding: 7px 0px 4px 0px;
+            text-align: center;
+        }
+        
+        #slider {
+            position: relative;
+            top: 5px;
+        }
+        
+        .mapboxgl-popup-content .provincia {
+            margin: 7px 7px 0px 7px;
+        }
+        
+        .mapboxgl-popup-content .totales {
+            margin: 1px 7px 0px 7px;
+        }
+        
+        .total_region {
+            font-size: 10px;
+            font-weight: 700;
+            margin: 0 7px;
+        }
+        
+        .note {
+            margin: auto;
+            max-width: 700px;
+            text-align: left;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
     <label id="week_a_week"></label>
     <input id="slider" type="range" min="0" max="7" step="1" value="7" />
     <div id="map"></div>
     <p class="note">
-      Nota: En la base de datos analizada no se han tomado en cuenta 25992 casos
-      de COVID-19 debido a que las provincias a las que pertenecen están en
-      investigación.
+        Nota: En la base de datos analizada no se han tomado en cuenta 25992 casos de COVID-19 debido a que las provincias a las que pertenecen están en investigación.
     </p>
     <div id="conclusion" class="note"></div>
     <script>
-      mapboxgl.accessToken =
-        "pk.eyJ1IjoiZ2VueWxlb25nIiwiYSI6ImNqeTdrMWQweDAwYWUzZXM2ZHUxN3lxcWMifQ.taFCKYjv4VSHhWN86P8N1Q";
+        mapboxgl.accessToken =
+            "pk.eyJ1IjoiZ2VueWxlb25nIiwiYSI6ImNqeTdrMWQweDAwYWUzZXM2ZHUxN3lxcWMifQ.taFCKYjv4VSHhWN86P8N1Q";
 
-      var map = new mapboxgl.Map({
-        container: "map",
-        center: [-75.178, -9.184],
-        minZoom: 3,
-        zoom: 3.8,
-        style: "mapbox://styles/mapbox/light-v10",
-      });
+        var map = new mapboxgl.Map({
+            container: "map",
+            center: [-75.178, -9.184],
+            minZoom: 3,
+            zoom: 3.8,
+            style: "mapbox://styles/mapbox/light-v10",
+        });
 
-      function getColor(n) {
-        return n >= 100
-          ? "#800026"
-          : n >= 70
-          ? "#bd0026"
-          : n >= 60
-          ? "#e31a1c"
-          : n >= 50
-          ? "#fc4e2a"
-          : n >= 30
-          ? "#fd8d3c"
-          : n >= 20
-          ? "#feb24c"
-          : n >= 15
-          ? "#fed976"
-          : n >= 5
-          ? "#ffeda0"
-          : "#ffffcc";
-      }
+        function getColor(n) {
+            return n >= 100 ?
+                "#800026" :
+                n >= 70 ?
+                "#bd0026" :
+                n >= 60 ?
+                "#e31a1c" :
+                n >= 50 ?
+                "#fc4e2a" :
+                n >= 30 ?
+                "#fd8d3c" :
+                n >= 20 ?
+                "#feb24c" :
+                n >= 15 ?
+                "#fed976" :
+                n >= 5 ?
+                "#ffeda0" :
+                "#ffffcc";
+        }
 
-      function filterBy(data, covid_filter, week) {
-        //console.log(data, data_covid, week);
-        //         casos = _.chain(data_covid)
-        //           .groupBy("FECHA_RESULTADO")
-        //           .toPairs()
-        //           .map(function(currentData) {
-        //             return _.zipObject(["FECHA_RESULTADO", "users"], currentData);
-        //           })
-        //           .value();
+        function filterBy(data, covid_filter, week) {
+            //console.log(data, data_covid, week);
+            //         casos = _.chain(data_covid)
+            //           .groupBy("FECHA_RESULTADO")
+            //           .toPairs()
+            //           .map(function(currentData) {
+            //             return _.zipObject(["FECHA_RESULTADO", "users"], currentData);
+            //           })
+            //           .value();
 
-        //         provincia = _.chain(casos[22].users)
-        //           .keyBy("PROVINCIA")
-        //           .mapValues("TOTAL")
-        //           .value();
+            //         provincia = _.chain(casos[22].users)
+            //           .keyBy("PROVINCIA")
+            //           .mapValues("TOTAL")
+            //           .value();
 
-        features = data.features.map((d, b) => {
-          var popup = new mapboxgl.Popup();
-          var layerID = d.properties.NOMBPROV;
-          //console.log(layerID)
+            features = data.features.map((d, b) => {
+                var popup = new mapboxgl.Popup();
+                var layerID = d.properties.NOMBPROV;
+                //console.log(layerID)
 
-          // if (week == "8") {
+                // if (week == "8") {
 
-          provincia = _.chain(casos[week].users)
-            .keyBy("PROVINCIA")
-            .mapValues("TOTAL")
-            .value();
+                provincia = _.chain(casos[week].users)
+                    .keyBy("PROVINCIA")
+                    .mapValues("TOTAL")
+                    .value();
 
-          value_input = document.getElementById("slider").value;
-          console.log(casos, value_input);
-          if (value_input == 0) {
-            document.getElementById("week_a_week").textContent =
-              "Semana del 2021-12-12" +
-              " hasta el " +
-              casos[week]["FECHA_RESULTADO"];
-          } else {
-            console.log(casos[week]["FECHA_RESULTADO"]);
-            const date_next = casos[week - 1]["FECHA_RESULTADO"];
-            //date_next.setDate(date_next.getDate() + 1);
+                value_input = document.getElementById("slider").value;
+                console.log(casos, value_input);
+                if (value_input == 0) {
+                    document.getElementById("week_a_week").textContent =
+                        "Semana del 2021-12-13" +
+                        " hasta el " +
+                        casos[week]["FECHA_RESULTADO"];
+                } else {
+                    console.log(casos[week]["FECHA_RESULTADO"]);
+                    const date_next = casos[week - 1]["FECHA_RESULTADO"];
+                    //date_next.setDate(date_next.getDate() + 1);
 
-            const array_date = date_next.split("-");
-            console.log(date_next, array_date[2].split(""));
-            // const day_convert = "",
-            //     month_convert = "";
+                    const array_date = date_next.split("-");
+                    console.log(date_next, array_date[2].split(""));
+                    // const day_convert = "",
+                    //     month_convert = "";
 
-            if (array_date[2] < 9) {
-              day_convert = array_date[2].split("");
-              day_final = day_convert[0] + (parseInt(day_convert[1]) + 1);
-              dateFormat =
-                array_date[0] + "-" + array_date[1] + "-" + day_final;
-            } else if (array_date[2] >= 9 && array_date[2] < 31) {
-              day_final = parseInt(array_date[2]) + 1;
-              dateFormat =
-                array_date[0] + "-" + array_date[1] + "-" + day_final;
-            } else if (
-              array_date[2] == 31 &&
-              (array_date[1] == "01" ||
-                array_date[1] == "03" ||
-                array_date[1] == "05" ||
-                array_date[1] == "07" ||
-                array_date[1] == "08" ||
-                array_date[1] == "10" ||
-                array_date[1] == "12")
-            ) {
-              const month_convert = array_date[1].split("");
+                    if (array_date[2] < 9) {
+                        day_convert = array_date[2].split("");
+                        day_final = day_convert[0] + (parseInt(day_convert[1]) + 1);
+                        dateFormat =
+                            array_date[0] + "-" + array_date[1] + "-" + day_final;
+                    } else if (array_date[2] >= 9 && array_date[2] < 31) {
+                        day_final = parseInt(array_date[2]) + 1;
+                        dateFormat =
+                            array_date[0] + "-" + array_date[1] + "-" + day_final;
+                    } else if (
+                        array_date[2] == 31 &&
+                        (array_date[1] == "01" ||
+                            array_date[1] == "03" ||
+                            array_date[1] == "05" ||
+                            array_date[1] == "07" ||
+                            array_date[1] == "08" ||
+                            array_date[1] == "10" ||
+                            array_date[1] == "12")
+                    ) {
+                        const month_convert = array_date[1].split("");
 
-              month_final = month_convert[0] + parseInt(month_convert[1] + 1);
-              console.log(month_convert, month_final);
-              dateFormat = array_date[0] + "-" + month_final + "-" + "01";
-            }
+                        month_final = month_convert[0] + parseInt(month_convert[1] + 1);
+                        console.log(month_convert, month_final);
+                        dateFormat = array_date[0] + "-" + month_final + "-" + "01";
+                    }
 
-            document.getElementById("week_a_week").textContent =
-              "Semana del " +
-              dateFormat +
-              " hasta el " +
-              casos[week]["FECHA_RESULTADO"];
-          }
-
-          if (provincia[layerID] !== "") {
-            map.setPaintProperty(
-              layerID,
-              "fill-color",
-              getColor(provincia[layerID])
-            );
-
-            function _isContains(json, value) {
-              //console.log(value);
-              let contains = false;
-              Object.keys(json).some((key) => {
-                //console.log(json[key]);
-
-                contains =
-                  typeof json[key] === "object"
-                    ? _isContains(json[key], value)
-                    : json[key] === value;
-                return contains;
-              });
-              return contains;
-            }
-
-            const todas_provincias = casos[week].users;
-            const array_cero = [];
-            const array_max = [];
-            for (provincia in todas_provincias) {
-              casos_provincia = todas_provincias[provincia]["TOTAL"];
-              nombre_provincia = todas_provincias[provincia]["PROVINCIA"];
-
-              if (casos_provincia == 0) {
-                array_cero.push(nombre_provincia);
-              }
-              if (casos_provincia > 100) {
-                array_max.push(nombre_provincia);
-              }
-            }
-
-            //console.log(array_cero, array_max);
-            document.getElementById("conclusion").innerHTML =
-              "<p>Provincias con ningun caso de COVID-19 durante la semana seleccionada: " +
-              array_cero.join(", ") +
-              "</p><p>Provincias con más de 100 casos de COVID-19 cada 100.000 habitantes durante la semana seleccionada: " +
-              array_max.join(", ") +
-              "</p>";
-
-            map.on("click", layerID, function (e) {
-              //console.log(casos[22].users)
-              console.log(casos[week]);
-              var total_provincia = casos[week].users;
-              console.log(total_provincia);
-              var casos_provincia, casos_mujeres, casos_hombres, casos_region;
-
-              for (prov in total_provincia) {
-                //console.log(prov);
-                getProv = e.features[0].properties.NOMBPROV;
-                getDep = e.features[0].properties.FIRST_NOMB;
-
-                getProvName = total_provincia[prov]["PROVINCIA"];
-                //console.log(total_provincia, getProv);
-                var checkValue = _isContains(total_provincia, getProv);
-                console.log(getProv, checkValue);
-                if (getProv == getProvName && checkValue == true) {
-                  console.log(getProvName, getProv);
-                  casos_provincia = total_provincia[prov]["TOTAL"];
-                  casos_mujeres = total_provincia[prov]["FEMENINO"];
-                  casos_hombres = total_provincia[prov]["MASCULINO"];
-                  casos_region = total_provincia[prov]["INDICE"];
+                    document.getElementById("week_a_week").textContent =
+                        "Semana del " +
+                        dateFormat +
+                        " hasta el " +
+                        casos[week]["FECHA_RESULTADO"];
                 }
 
-                if (casos_provincia == undefined || checkValue == false) {
-                  //console.log(total_provincia[prov]["INDICE"]);
-                  casos_region = "n/a";
-                  casos_provincia = "n/a";
-                  casos_mujeres = "n/a";
-                  casos_hombres = "n/a";
+                if (provincia[layerID] !== "") {
+                    map.setPaintProperty(
+                        layerID,
+                        "fill-color",
+                        getColor(provincia[layerID])
+                    );
+
+                    function _isContains(json, value) {
+                        //console.log(value);
+                        let contains = false;
+                        Object.keys(json).some((key) => {
+                            //console.log(json[key]);
+
+                            contains =
+                                typeof json[key] === "object" ?
+                                _isContains(json[key], value) :
+                                json[key] === value;
+                            return contains;
+                        });
+                        return contains;
+                    }
+
+                    const todas_provincias = casos[week].users;
+                    const array_cero = [];
+                    const array_max = [];
+                    for (provincia in todas_provincias) {
+                        casos_provincia = todas_provincias[provincia]["TOTAL"];
+                        nombre_provincia = todas_provincias[provincia]["PROVINCIA"];
+
+                        if (casos_provincia == 0) {
+                            array_cero.push(nombre_provincia);
+                        }
+                        if (casos_provincia > 100) {
+                            array_max.push(nombre_provincia);
+                        }
+                    }
+
+                    //console.log(array_cero, array_max);
+                    document.getElementById("conclusion").innerHTML =
+                        "<p>Provincias con ningun caso de COVID-19 durante la semana seleccionada: " +
+                        array_cero.join(", ") +
+                        "</p><p>Provincias con más de 100 casos de COVID-19 cada 100.000 habitantes durante la semana seleccionada: " +
+                        array_max.join(", ") +
+                        "</p>";
+
+                    map.on("click", layerID, function(e) {
+                        //console.log(casos[22].users)
+                        console.log(casos[week]);
+                        var total_provincia = casos[week].users;
+                        console.log(total_provincia);
+                        var casos_provincia, casos_mujeres, casos_hombres, casos_region;
+
+                        for (prov in total_provincia) {
+                            //console.log(prov);
+                            getProv = e.features[0].properties.NOMBPROV;
+                            getDep = e.features[0].properties.FIRST_NOMB;
+
+                            getProvName = total_provincia[prov]["PROVINCIA"];
+                            //console.log(total_provincia, getProv);
+                            var checkValue = _isContains(total_provincia, getProv);
+                            console.log(getProv, checkValue);
+                            if (getProv == getProvName && checkValue == true) {
+                                console.log(getProvName, getProv);
+                                casos_provincia = total_provincia[prov]["TOTAL"];
+                                casos_mujeres = total_provincia[prov]["FEMENINO"];
+                                casos_hombres = total_provincia[prov]["MASCULINO"];
+                                casos_region = total_provincia[prov]["INDICE"];
+                            }
+
+                            if (casos_provincia == undefined || checkValue == false) {
+                                //console.log(total_provincia[prov]["INDICE"]);
+                                casos_region = "n/a";
+                                casos_provincia = "n/a";
+                                casos_mujeres = "n/a";
+                                casos_hombres = "n/a";
+                            }
+                        }
+
+                        var x, i;
+                        x = document.querySelectorAll(".mapboxgl-popup");
+                        for (i = 0; i < x.length; i++) {
+                            x[i].remove();
+                        }
+                        //$(".mapboxgl-popup").remove();
+                        popup
+                            .setLngLat(e.lngLat)
+                            .setHTML(
+                                "<p class='provincia'>" +
+                                getDep +
+                                " - " +
+                                getProv +
+                                "</p><p class='totales'>" +
+                                casos_provincia +
+                                " casos cada 100.000 hab.</p><p class='totales'>" +
+                                casos_mujeres +
+                                " mujeres cada 100.000 hab.</p><p class='totales'>" +
+                                casos_hombres +
+                                " hombres cada 100.000 hab.</p><p class='total_region'>Acumulado de la región/100.000 hab: " +
+                                casos_region +
+                                "</p>"
+                            )
+                            .addTo(map);
+                    });
                 }
-              }
 
-              var x, i;
-              x = document.querySelectorAll(".mapboxgl-popup");
-              for (i = 0; i < x.length; i++) {
-                x[i].remove();
-              }
-              //$(".mapboxgl-popup").remove();
-              popup
-                .setLngLat(e.lngLat)
-                .setHTML(
-                  "<p class='provincia'>" +
-                    getDep +
-                    " - " +
-                    getProv +
-                    "</p><p class='totales'>" +
-                    casos_provincia +
-                    " casos cada 100.000 hab.</p><p class='totales'>" +
-                    casos_mujeres +
-                    " mujeres cada 100.000 hab.</p><p class='totales'>" +
-                    casos_hombres +
-                    " hombres cada 100.000 hab.</p><p class='total_region'>Acumulado de la región/100.000 hab: " +
-                    casos_region +
-                    "</p>"
-                )
-                .addTo(map);
+                map.on("mouseenter", layerID, function() {
+                    map.getCanvas().style.cursor = "pointer";
+                });
+
+                // Change it back to a pointer when it leaves.
+                map.on("mouseleave", layerID, function() {
+                    map.getCanvas().style.cursor = "";
+                });
+
+                map.setFilter(layerID, ["==", ["get", "NOMBPROV"], layerID]);
             });
-          }
+        }
 
-          map.on("mouseenter", layerID, function () {
-            map.getCanvas().style.cursor = "pointer";
-          });
+        map.on("load", async function() {
+            //var result = [];
+            var files = [
+                "geojson.json",
+                "https://raw.githubusercontent.com/GenyLeong/casos_provincia/main/dataset_covid_total.json",
+            ];
 
-          // Change it back to a pointer when it leaves.
-          map.on("mouseleave", layerID, function () {
-            map.getCanvas().style.cursor = "";
-          });
+            const data = await d3.json(files[0]);
+            const data_covid = await d3.json(files[1]);
+            const covid_filter = data_covid["data"];
 
-          map.setFilter(layerID, ["==", ["get", "NOMBPROV"], layerID]);
-        });
-      }
+            console.log(data, data_covid);
 
-      map.on("load", async function () {
-        //var result = [];
-        var files = [
-          "geojson.json",
-          "https://raw.githubusercontent.com/GenyLeong/casos_provincia/main/dataset_covid_total.json",
-        ];
+            map["dragPan"].disable();
 
-        const data = await d3.json(files[0]);
-        const data_covid = await d3.json(files[1]);
-        const covid_filter = data_covid["data"];
-
-        console.log(data, data_covid);
-
-        map["dragPan"].disable();
-
-        map.addSource("data", {
-          type: "geojson",
-          data: data,
-        });
-
-        data.features.forEach(function (d, b) {
-          var layerID = d.properties.NOMBPROV;
-
-          //console.log(covid_filter);
-          casos = _.chain(covid_filter)
-            .groupBy("FECHA_RESULTADO")
-            .toPairs()
-            .map(function (currentData) {
-              return _.zipObject(["FECHA_RESULTADO", "users"], currentData);
-            })
-            .value();
-
-          //console.log(casos);
-
-          provincia = _.chain(casos[7].users)
-            .keyBy("PROVINCIA")
-            .mapValues("TOTAL")
-            .value();
-
-          if (!map.getLayer(layerID) && provincia[layerID] !== "") {
-            map.addLayer({
-              id: layerID,
-              type: "fill",
-              source: "data",
-              layout: {},
-              paint: {
-                "fill-color": getColor(provincia[layerID]),
-                "fill-opacity": 0.6,
-              },
+            map.addSource("data", {
+                type: "geojson",
+                data: data,
             });
-          }
+
+            data.features.forEach(function(d, b) {
+                var layerID = d.properties.NOMBPROV;
+
+                //console.log(covid_filter);
+                casos = _.chain(covid_filter)
+                    .groupBy("FECHA_RESULTADO")
+                    .toPairs()
+                    .map(function(currentData) {
+                        return _.zipObject(["FECHA_RESULTADO", "users"], currentData);
+                    })
+                    .value();
+
+                //console.log(casos);
+
+                provincia = _.chain(casos[7].users)
+                    .keyBy("PROVINCIA")
+                    .mapValues("TOTAL")
+                    .value();
+
+                if (!map.getLayer(layerID) && provincia[layerID] !== "") {
+                    map.addLayer({
+                        id: layerID,
+                        type: "fill",
+                        source: "data",
+                        layout: {},
+                        paint: {
+                            "fill-color": getColor(provincia[layerID]),
+                            "fill-opacity": 0.6,
+                        },
+                    });
+                }
+            });
+
+            filterBy(data, covid_filter, 7);
+
+            document
+                .getElementById("slider")
+                .addEventListener("input", function(e) {
+                    var week = parseInt(e.target.value, 8);
+                    console.log(week);
+                    filterBy(data, covid_filter, week);
+                });
         });
-
-        filterBy(data, covid_filter, 7);
-
-        document
-          .getElementById("slider")
-          .addEventListener("input", function (e) {
-            var week = parseInt(e.target.value, 8);
-            console.log(week);
-            filterBy(data, covid_filter, week);
-          });
-      });
     </script>
     <!-- <script src="script.js" defer></script> -->
-  </body>
+</body>
+
 </html>
