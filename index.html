@@ -73,6 +73,12 @@
             margin: auto;
             max-width: 700px;
             text-align: left;
+            font-size: 14px;
+        }
+        
+        #conclusion p {
+            font-size: 14px;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -82,7 +88,7 @@
     <input id="slider" type="range" min="0" max="7" step="1" value="7" />
     <div id="map"></div>
     <p class="note">
-        Nota: En la base de datos analizada no se han tomado en cuenta 2689 casos de COVID-19 debido a que las provincias a las que pertenecen están en investigación.
+        Nota: En la base de datos analizada no se han tomado en cuenta 2689 casos de COVID-19 debido a que la información no está completa.
     </p>
     <div id="conclusion" class="note"></div>
     <script>
@@ -233,11 +239,13 @@
 
                     //console.log(array_cero, array_max);
                     document.getElementById("conclusion").innerHTML =
-                        "<p>Provincias con ningun caso de COVID-19 durante la semana seleccionada: " +
+                        array_cero.length > 0 && array_max.length > 0 ?
+                        "<p>Provincias con ningún caso de COVID-19 durante la semana seleccionada: " +
                         array_cero.join(", ") +
                         "</p><p>Provincias con más de 100 casos de COVID-19 cada 100.000 habitantes durante la semana seleccionada: " +
                         array_max.join(", ") +
-                        "</p>";
+                        "</p>" :
+                        "<p>Provincias con ningún caso de COVID-19 durante la semana seleccionada: NINGUNA</p><p>Provincias con más de 100 casos de COVID-19 cada 100.000 habitantes durante la semana seleccionada: NINGUNA</p>";
 
                     map.on("click", layerID, function(e) {
                         //console.log(casos[22].users)
