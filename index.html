@@ -96,7 +96,7 @@
     <div id="conclusion" class="note"></div>
     <script>
         mapboxgl.accessToken =
-            "pk.eyJ1IjoiZ2VueWxlb25nIiwiYSI6ImNqeTdrMWQweDAwYWUzZXM2ZHUxN3lxcWMifQ.taFCKYjv4VSHhWN86P8N1Q";
+            "pk.eyJ1IjoiZ2VueWxlb25nIiwiYSI6ImNsNGVodDUxdjAwMXEza2wwejF0NHFnNDMifQ.m8_ortP8i8q2ZhkBAeGm3w";
 
         var map = new mapboxgl.Map({
             container: "map",
@@ -154,19 +154,19 @@
                     .value();
 
                 value_input = document.getElementById("slider").value;
-                console.log(casos, value_input);
+                //console.log(casos, value_input);
                 if (value_input == 0) {
                     document.getElementById("week_a_week").textContent =
-                        "Semana del 2022-04-24" +
+                        "Semana del 2022-04-18" +
                         " hasta el " +
                         casos[week]["FECHA_RESULTADO"];
                 } else {
-                    console.log(casos[week]["FECHA_RESULTADO"]);
+                    //console.log(casos[week]["FECHA_RESULTADO"]);
                     const date_next = casos[week - 1]["FECHA_RESULTADO"];
                     //date_next.setDate(date_next.getDate() + 1);
 
                     const array_date = date_next.split("-");
-                    console.log(date_next, array_date[2].split(""));
+                    //console.log(date_next, array_date[2].split(""));
                     // const day_convert = "",
                     //     month_convert = "";
 
